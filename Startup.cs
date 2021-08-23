@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Sqlite;
 
 namespace Meus_Produtos
 {
@@ -28,10 +30,18 @@ namespace Meus_Produtos
         {
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Meus_Produtos", Version = "v1" });
-            });
+            services.AddControllers();
+
+            services.AddDbContext<ClientContext>(options =>
+                    options.UseSqlite(Configuration.GetConnectionString("default")));
+
+            services.AddDbContext<ProductContext>(options =>
+                    options.UseSqlite(Configuration.GetConnectionString("default")));
+            // services.AddDbContext<TodoContext>(opt =>
+            //                         opt.UseSqlite(Configuration.GetConnectionString("cs")));
+
+            // services.AddDbContext<ClientContext>(opt =>
+            //                         opt.UseSqlite(Configuration.GetConnectionString("cs")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,8 +50,6 @@ namespace Meus_Produtos
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Meus_Produtos v1"));
             }
 
             app.UseHttpsRedirection();
