@@ -14,6 +14,10 @@ O cadastro de produtos deve conter os campos:
 * valor
 * status
 
+## Relatórios 
+
+Na pasta [tests](./tests) há dois arquivos que **.html** que são relatórios gerados com o Newman e o Postman. Para velos basta baixa-los e abrir com o navegador.
+
 ## Tecnologias usadas
 * [Asp.Net Core 5](https://docs.microsoft.com/pt-br/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-5.0)
 * [SQLite3](https://www.sqlite.org/index.html)
