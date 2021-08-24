@@ -36,4 +36,4 @@ jobs:
           # Reporter to use
           reporters: htmlextra
           # Reporter options
-#           reporter: # optional
+          reporter: --reporter-htmlextra-export tests/Report.html
