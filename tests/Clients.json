@@ -1,0 +1,715 @@
+{
+	"info": {
+		"_postman_id": "6d41e138-cf80-4c42-ac17-0c99f30052a3",
+		"name": "Clients",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "NewClient",
+			"item": [
+				{
+					"name": "Empty",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(",
+									"    \"Status code is 415\", ",
+									"    () => pm.response.to.have.status(415)",
+									")"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{clientUrl}}",
+							"host": [
+								"{{clientUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Without Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(",
+									"    \"Status code is 400\", ",
+									"    () => pm.response.to.have.status(400)",
+									")",
+									"",
+									"function sameMessage() {",
+									"    return pm.environment.get(\"WithoutNameMessage\") == JSON.parse(responseBody).errors.Name",
+									"}",
+									"",
+									"pm.test(",
+									"    \"Check if message is correct\", ",
+									"    () => pm.expect(true).to.eql(sameMessage())",
+									")"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"//GuidID Generator",
+									"function guidID() {",
+									"    return 'xxxx-4xxx-yxxx-xxxx'.replace(/[xy]/g, function(c) {",
+									"        var r = Math.random() * 16 | 0,",
+									"            v = c == 'x' ? r : (r & 0x3 | 0x8);",
+									"        return v.toString(16);",
+									"    });",
+									"}",
+									"",
+									"pm.environment.set(\"GuidID\", guidID());",
+									"",
+									"//Last emailProvider Generator",
+									"function emailProvider() {",
+									"",
+									"    var email = [\"@hotmail.com\", \"@gmail.com\", \"@terra.com.br\"];",
+									"    var randomItem = email[Math.floor(Math.random() * email.length)];",
+									"    return randomItem;",
+									"}",
+									"",
+									"//grava o provedor de email",
+									"pm.environment.set(\"EmailProvider\", emailProvider());",
+									"",
+									"pm.environment.set(\"Email\", pm.environment.get(\"GuidID\") + \"_\" + pm.environment.get(\"Name\") + pm.environment.get(\"EmailProvider\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"{{Password}}\",\n    \"email\": \"{{Email}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{clientUrl}}",
+							"host": [
+								"{{clientUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Without Password",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"//Fist Name Generator",
+									"function name() {",
+									"",
+									"    var fistName = [\"Agda\", \"Andréia\", \"André\", \"Adriano\", \"Abinadar\", \"Alice\", \"Ariana\", \"Alencar\", \"Alcemir\", \"Aline\", \"Américo\", \"Ariane\", \"Bruno\", \"Bruna\", \"Beatriz\", \"Berenice\", \"Benedito\", \"Benedita\", \"Carlos\", \"Camila\", \"Caroline\", \"Camilo\", \"Ceverino\", \"Denis\", \"Denise\", \"Daniel\", \"Dorivaldo\", \"Darley\", \"Edson\", \"Eliane\", \"Eliana\", \"Ester\", \"Everaldo\", \"Elias\", \"Estenio\", \"Etevaldo\", \"Euclides\", \"Eliezer\", \"Everaldo\", \"Eduardo\", \"Emanuel\", \"Eunice\", \"Elaine\", \"Jaqueline\", \"Josivaldo\", \"josefina\", \"Larissa\", \"Laís\", \"Laercío\", \"Leandro\", \"Lucas\", \"Maria\", \"Marcos\", \"Melissa\", \"Marcelo\", \"Mariana\", \"Matheus\", \"Milena\", \"Neilson\", \"Naiara\", \"Nilson\", \"Nerivaldo\", \"Noemia\", \"Núbia\", \"Nilvan\", \"Olavo\", \"Oliver\", \"Olindo\", \"Paulo\", \"Paula\", \"Pedro\", \"Pedrina\", \"Pivanne\", \"Patrícia\", \"Quelvin\", \"Queila\", \"Ronaldo\", \"Ronan\", \"Romildo\", \"Rodolfo\", \"Rita\", \"Ravier\", \"Romã\", \"Salivan\", \"Selton\", \"Simirá\", \"Tadeu\", \"Taís\", \"Tamilá\", \"Tadeu\", \"Telma\", \"Ulisson\", \"Umberto\", \"Vicente\", \"Vanice\", \"Vera\", \"Valdermor\", \"Zulmira\", \"Zenira\"];",
+									"",
+									"    var randomItem = fistName[Math.floor(Math.random() * fistName.length)];",
+									"",
+									"    return randomItem;",
+									"}",
+									"",
+									"pm.environment.set(\"Name\", name());",
+									"",
+									"//GuidID Generator",
+									"function guidID() {",
+									"    return 'xxxx-4xxx-yxxx-xxxx'.replace(/[xy]/g, function(c) {",
+									"        var r = Math.random() * 16 | 0,",
+									"            v = c == 'x' ? r : (r & 0x3 | 0x8);",
+									"        return v.toString(16);",
+									"    });",
+									"}",
+									"",
+									"pm.environment.set(\"GuidID\", guidID());",
+									"",
+									"//Last emailProvider Generator",
+									"function emailProvider() {",
+									"",
+									"    var email = [\"@hotmail.com\", \"@gmail.com\", \"@terra.com.br\"];",
+									"    var randomItem = email[Math.floor(Math.random() * email.length)];",
+									"    return randomItem;",
+									"}",
+									"",
+									"//grava o provedor de email",
+									"pm.environment.set(\"EmailProvider\", emailProvider());",
+									"",
+									"pm.environment.set(\"Email\", pm.environment.get(\"GuidID\") + \"_\" + pm.environment.get(\"Name\") + pm.environment.get(\"EmailProvider\"));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(",
+									"    \"Status code is 400\", ",
+									"    () => pm.response.to.have.status(400)",
+									")",
+									"",
+									"function sameMessage() {",
+									"    return pm.environment.get(\"WithoutPasswordMessage\") == JSON.parse(responseBody).errors.Password",
+									"}",
+									"",
+									"pm.test(",
+									"    \"Check if message is correct\", ",
+									"    () => pm.expect(true).to.eql(sameMessage())",
+									")"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"{{Name}}\",\n    \"email\": \"{{Email}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{clientUrl}}",
+							"host": [
+								"{{clientUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Without Email",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"//Fist Name Generator",
+									"function name() {",
+									"",
+									"    var fistName = [\"Agda\", \"Andréia\", \"André\", \"Adriano\", \"Abinadar\", \"Alice\", \"Ariana\", \"Alencar\", \"Alcemir\", \"Aline\", \"Américo\", \"Ariane\", \"Bruno\", \"Bruna\", \"Beatriz\", \"Berenice\", \"Benedito\", \"Benedita\", \"Carlos\", \"Camila\", \"Caroline\", \"Camilo\", \"Ceverino\", \"Denis\", \"Denise\", \"Daniel\", \"Dorivaldo\", \"Darley\", \"Edson\", \"Eliane\", \"Eliana\", \"Ester\", \"Everaldo\", \"Elias\", \"Estenio\", \"Etevaldo\", \"Euclides\", \"Eliezer\", \"Everaldo\", \"Eduardo\", \"Emanuel\", \"Eunice\", \"Elaine\", \"Jaqueline\", \"Josivaldo\", \"josefina\", \"Larissa\", \"Laís\", \"Laercío\", \"Leandro\", \"Lucas\", \"Maria\", \"Marcos\", \"Melissa\", \"Marcelo\", \"Mariana\", \"Matheus\", \"Milena\", \"Neilson\", \"Naiara\", \"Nilson\", \"Nerivaldo\", \"Noemia\", \"Núbia\", \"Nilvan\", \"Olavo\", \"Oliver\", \"Olindo\", \"Paulo\", \"Paula\", \"Pedro\", \"Pedrina\", \"Pivanne\", \"Patrícia\", \"Quelvin\", \"Queila\", \"Ronaldo\", \"Ronan\", \"Romildo\", \"Rodolfo\", \"Rita\", \"Ravier\", \"Romã\", \"Salivan\", \"Selton\", \"Simirá\", \"Tadeu\", \"Taís\", \"Tamilá\", \"Tadeu\", \"Telma\", \"Ulisson\", \"Umberto\", \"Vicente\", \"Vanice\", \"Vera\", \"Valdermor\", \"Zulmira\", \"Zenira\"];",
+									"",
+									"    var randomItem = fistName[Math.floor(Math.random() * fistName.length)];",
+									"",
+									"    return randomItem;",
+									"}",
+									"",
+									"pm.environment.set(\"Name\", name());"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(",
+									"    \"Status code is 400\", ",
+									"    () => pm.response.to.have.status(400)",
+									")",
+									"",
+									"function sameMessage() {",
+									"    return pm.environment.get(\"WithoutEmailMessage\") == JSON.parse(responseBody).errors.Email",
+									"}",
+									"",
+									"pm.test(",
+									"    \"Check if message is correct\", ",
+									"    () => pm.expect(true).to.eql(sameMessage())",
+									")"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"{{Name}}\",\n    \"password\": \"{{Password}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{clientUrl}}",
+							"host": [
+								"{{clientUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Wrong Email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(",
+									"    \"Status code is 400\", ",
+									"    () => pm.response.to.have.status(400)",
+									")",
+									"",
+									"function sameMessage() {",
+									"    return pm.environment.get(\"WrongEmailMessage\") == JSON.parse(responseBody).errors.Email",
+									"}",
+									"",
+									"pm.test(",
+									"    \"Check if message is correct\", ",
+									"    () => pm.expect(true).to.eql(sameMessage())",
+									")"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"//Fist Name Generator",
+									"function name() {",
+									"",
+									"    var fistName = [\"Agda\", \"Andréia\", \"André\", \"Adriano\", \"Abinadar\", \"Alice\", \"Ariana\", \"Alencar\", \"Alcemir\", \"Aline\", \"Américo\", \"Ariane\", \"Bruno\", \"Bruna\", \"Beatriz\", \"Berenice\", \"Benedito\", \"Benedita\", \"Carlos\", \"Camila\", \"Caroline\", \"Camilo\", \"Ceverino\", \"Denis\", \"Denise\", \"Daniel\", \"Dorivaldo\", \"Darley\", \"Edson\", \"Eliane\", \"Eliana\", \"Ester\", \"Everaldo\", \"Elias\", \"Estenio\", \"Etevaldo\", \"Euclides\", \"Eliezer\", \"Everaldo\", \"Eduardo\", \"Emanuel\", \"Eunice\", \"Elaine\", \"Jaqueline\", \"Josivaldo\", \"josefina\", \"Larissa\", \"Laís\", \"Laercío\", \"Leandro\", \"Lucas\", \"Maria\", \"Marcos\", \"Melissa\", \"Marcelo\", \"Mariana\", \"Matheus\", \"Milena\", \"Neilson\", \"Naiara\", \"Nilson\", \"Nerivaldo\", \"Noemia\", \"Núbia\", \"Nilvan\", \"Olavo\", \"Oliver\", \"Olindo\", \"Paulo\", \"Paula\", \"Pedro\", \"Pedrina\", \"Pivanne\", \"Patrícia\", \"Quelvin\", \"Queila\", \"Ronaldo\", \"Ronan\", \"Romildo\", \"Rodolfo\", \"Rita\", \"Ravier\", \"Romã\", \"Salivan\", \"Selton\", \"Simirá\", \"Tadeu\", \"Taís\", \"Tamilá\", \"Tadeu\", \"Telma\", \"Ulisson\", \"Umberto\", \"Vicente\", \"Vanice\", \"Vera\", \"Valdermor\", \"Zulmira\", \"Zenira\"];",
+									"",
+									"    var randomItem = fistName[Math.floor(Math.random() * fistName.length)];",
+									"",
+									"    return randomItem;",
+									"}",
+									"",
+									"pm.environment.set(\"Name\", name());",
+									"",
+									"//GuidID Generator",
+									"function guidID() {",
+									"    return 'xxxx-4xxx-yxxx-xxxx'.replace(/[xy]/g, function(c) {",
+									"        var r = Math.random() * 16 | 0,",
+									"            v = c == 'x' ? r : (r & 0x3 | 0x8);",
+									"        return v.toString(16);",
+									"    });",
+									"}",
+									"",
+									"pm.environment.set(\"GuidID\", guidID());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"{{Name}}\",\n    \"password\": \"{{Password}}\",\n    \"email\": \"{{GuidID}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{clientUrl}}",
+							"host": [
+								"{{clientUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Status code is 200",
+									"pm.test(",
+									"    \"Status code is 201\", ",
+									"    pm.response.to.have.status(201)",
+									");",
+									"",
+									"// The password has been encrypted",
+									"function samePassword() {",
+									"    return pm.environment.get(\"Password\") == JSON.parse(responseBody).password",
+									"}",
+									"",
+									"pm.test(",
+									"    \"Check if password has been encrypted\", ",
+									"    pm.expect(false).to.eql(samePassword())",
+									");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"//Fist Name Generator",
+									"function name() {",
+									"",
+									"    var fistName = [\"Agda\", \"Andréia\", \"André\", \"Adriano\", \"Abinadar\", \"Alice\", \"Ariana\", \"Alencar\", \"Alcemir\", \"Aline\", \"Américo\", \"Ariane\", \"Bruno\", \"Bruna\", \"Beatriz\", \"Berenice\", \"Benedito\", \"Benedita\", \"Carlos\", \"Camila\", \"Caroline\", \"Camilo\", \"Ceverino\", \"Denis\", \"Denise\", \"Daniel\", \"Dorivaldo\", \"Darley\", \"Edson\", \"Eliane\", \"Eliana\", \"Ester\", \"Everaldo\", \"Elias\", \"Estenio\", \"Etevaldo\", \"Euclides\", \"Eliezer\", \"Everaldo\", \"Eduardo\", \"Emanuel\", \"Eunice\", \"Elaine\", \"Jaqueline\", \"Josivaldo\", \"josefina\", \"Larissa\", \"Laís\", \"Laercío\", \"Leandro\", \"Lucas\", \"Maria\", \"Marcos\", \"Melissa\", \"Marcelo\", \"Mariana\", \"Matheus\", \"Milena\", \"Neilson\", \"Naiara\", \"Nilson\", \"Nerivaldo\", \"Noemia\", \"Núbia\", \"Nilvan\", \"Olavo\", \"Oliver\", \"Olindo\", \"Paulo\", \"Paula\", \"Pedro\", \"Pedrina\", \"Pivanne\", \"Patrícia\", \"Quelvin\", \"Queila\", \"Ronaldo\", \"Ronan\", \"Romildo\", \"Rodolfo\", \"Rita\", \"Ravier\", \"Romã\", \"Salivan\", \"Selton\", \"Simirá\", \"Tadeu\", \"Taís\", \"Tamilá\", \"Tadeu\", \"Telma\", \"Ulisson\", \"Umberto\", \"Vicente\", \"Vanice\", \"Vera\", \"Valdermor\", \"Zulmira\", \"Zenira\"];",
+									"",
+									"    var randomItem = fistName[Math.floor(Math.random() * fistName.length)];",
+									"",
+									"    return randomItem;",
+									"}",
+									"",
+									"pm.environment.set(\"Name\", name());",
+									"",
+									"//GuidID Generator",
+									"function guidID() {",
+									"    return 'xxxx-4xxx-yxxx-xxxx'.replace(/[xy]/g, function(c) {",
+									"        var r = Math.random() * 16 | 0,",
+									"            v = c == 'x' ? r : (r & 0x3 | 0x8);",
+									"        return v.toString(16);",
+									"    });",
+									"}",
+									"",
+									"pm.environment.set(\"GuidID\", guidID());",
+									"",
+									"//Last emailProvider Generator",
+									"function emailProvider() {",
+									"",
+									"    var email = [\"@hotmail.com\", \"@gmail.com\", \"@terra.com.br\"];",
+									"    var randomItem = email[Math.floor(Math.random() * email.length)];",
+									"    return randomItem;",
+									"}",
+									"",
+									"//grava o provedor de email",
+									"pm.environment.set(\"EmailProvider\", emailProvider());",
+									"",
+									"pm.environment.set(\"Email\", pm.environment.get(\"GuidID\") + \"_\" + pm.environment.get(\"Name\") + pm.environment.get(\"EmailProvider\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"{{Name}}\",\n    \"password\": \"{{Password}}\",\n    \"email\": \"{{Email}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{clientUrl}}",
+							"host": [
+								"{{clientUrl}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ListClient",
+			"item": [
+				{
+					"name": "Success",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(",
+									"    \"Status code is 200\", ",
+									"    pm.response.to.have.status(200)",
+									");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{clientUrl}}",
+							"host": [
+								"{{clientUrl}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UpdateClient",
+			"item": [
+				{
+					"name": "Update Name",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"//Fist Name Generator",
+									"function name() {",
+									"",
+									"    var fistName = [\"Agda\", \"Andréia\", \"André\", \"Adriano\", \"Abinadar\", \"Alice\", \"Ariana\", \"Alencar\", \"Alcemir\", \"Aline\", \"Américo\", \"Ariane\", \"Bruno\", \"Bruna\", \"Beatriz\", \"Berenice\", \"Benedito\", \"Benedita\", \"Carlos\", \"Camila\", \"Caroline\", \"Camilo\", \"Ceverino\", \"Denis\", \"Denise\", \"Daniel\", \"Dorivaldo\", \"Darley\", \"Edson\", \"Eliane\", \"Eliana\", \"Ester\", \"Everaldo\", \"Elias\", \"Estenio\", \"Etevaldo\", \"Euclides\", \"Eliezer\", \"Everaldo\", \"Eduardo\", \"Emanuel\", \"Eunice\", \"Elaine\", \"Jaqueline\", \"Josivaldo\", \"josefina\", \"Larissa\", \"Laís\", \"Laercío\", \"Leandro\", \"Lucas\", \"Maria\", \"Marcos\", \"Melissa\", \"Marcelo\", \"Mariana\", \"Matheus\", \"Milena\", \"Neilson\", \"Naiara\", \"Nilson\", \"Nerivaldo\", \"Noemia\", \"Núbia\", \"Nilvan\", \"Olavo\", \"Oliver\", \"Olindo\", \"Paulo\", \"Paula\", \"Pedro\", \"Pedrina\", \"Pivanne\", \"Patrícia\", \"Quelvin\", \"Queila\", \"Ronaldo\", \"Ronan\", \"Romildo\", \"Rodolfo\", \"Rita\", \"Ravier\", \"Romã\", \"Salivan\", \"Selton\", \"Simirá\", \"Tadeu\", \"Taís\", \"Tamilá\", \"Tadeu\", \"Telma\", \"Ulisson\", \"Umberto\", \"Vicente\", \"Vanice\", \"Vera\", \"Valdermor\", \"Zulmira\", \"Zenira\"];",
+									"",
+									"    var randomItem = fistName[Math.floor(Math.random() * fistName.length)];",
+									"",
+									"    return randomItem;",
+									"}",
+									"",
+									"pm.environment.set(\"Name\", name());"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(",
+									"    \"Status code is 204\", ",
+									"    pm.response.to.have.status(204)",
+									");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"name\": \"{{Name}}\",\n    \"password\": \"{{Password}}\",\n    \"email\": \"{{Email}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{clientUrl}}/1",
+							"host": [
+								"{{clientUrl}}"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Email",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"//GuidID Generator",
+									"function guidID() {",
+									"    return 'xxxx-4xxx-yxxx-xxxx'.replace(/[xy]/g, function(c) {",
+									"        var r = Math.random() * 16 | 0,",
+									"            v = c == 'x' ? r : (r & 0x3 | 0x8);",
+									"        return v.toString(16);",
+									"    });",
+									"}",
+									"",
+									"pm.environment.set(\"GuidID\", guidID());",
+									"",
+									"//Last emailProvider Generator",
+									"function emailProvider() {",
+									"",
+									"    var email = [\"@hotmail.com\", \"@gmail.com\", \"@terra.com.br\"];",
+									"    var randomItem = email[Math.floor(Math.random() * email.length)];",
+									"    return randomItem;",
+									"}",
+									"",
+									"//grava o provedor de email",
+									"pm.environment.set(\"EmailProvider\", emailProvider());",
+									"",
+									"pm.environment.set(\"Email\", pm.environment.get(\"GuidID\") + \"_\" + pm.environment.get(\"Name\") + pm.environment.get(\"EmailProvider\"));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(",
+									"    \"Status code is 204\", ",
+									"    pm.response.to.have.status(204)",
+									");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"name\": \"{{Name}}\",\n    \"password\": \"{{Password}}\",\n    \"email\": \"{{Email}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{clientUrl}}/1",
+							"host": [
+								"{{clientUrl}}"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Password",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(",
+									"    \"Status code is 204\", ",
+									"    pm.response.to.have.status(204)",
+									");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"name\": \"{{Name}}\",\n    \"password\": \"dRE!cKZz\",\n    \"email\": \"{{Email}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{clientUrl}}/1",
+							"host": [
+								"{{clientUrl}}"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "delete Client",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(",
+							"    \"Status code is 204\", ",
+							"    pm.response.to.have.status(204)",
+							");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{clientUrl}}/1",
+					"host": [
+						"{{clientUrl}}"
+					],
+					"path": [
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -15,6 +15,7 @@ namespace Meus_Produtos.Models
         [RegularExpression(@"^\d+(\.\d{1,2})?$", ErrorMessage = "Please enter a valid price")]
         [Range(0, 9999999999999999.99, ErrorMessage = "Please enter a valid price")]
         public decimal Price { get; set; }
+        [Required]
         public bool Status { get; set; }
     }
 }

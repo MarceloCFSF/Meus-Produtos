@@ -1,0 +1,377 @@
+{
+	"info": {
+		"_postman_id": "b0507b40-6f1e-493c-928f-d0e90562e0ba",
+		"name": "Products",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "NewProduct",
+			"item": [
+				{
+					"name": "Empty",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(",
+									"    \"Status code is 415\", ",
+									"    () => pm.response.to.have.status(415)",
+									")"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{productUrl}}",
+							"host": [
+								"{{productUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Whitout Name",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function price() {",
+									"    return Math.random() * 9999999999999999.99",
+									"}",
+									"",
+									"pm.environment.set(\"Price\", price());"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(",
+									"    \"Status code is 400\", ",
+									"    () => pm.response.to.have.status(400)",
+									")",
+									"",
+									"function sameMessage() {",
+									"    return pm.environment.get(\"WithoutNameMessage\") == JSON.parse(responseBody).errors.Name",
+									"}",
+									"",
+									"pm.test(",
+									"    \"Check if message is correct\", ",
+									"    () => pm.expect(true).to.eql(sameMessage())",
+									")"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"price\": \"{{Price}}\",\n    \"status\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{productUrl}}",
+							"host": [
+								"{{productUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Success",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function pName() {",
+									"",
+									"    var pName = [\"Maçã\", \"Abobrinha\", \"Pera\", \"Cogumelos\", \"Tamareira\", \"Espinafre\", \"Rabanete\", \"Carne de vitela\", \"Óleo\", \"Amêijoas\", \"Televisão\", \"Revistas\", \"Livros\", \"Rádio\", \"Jornal\", \"Faca\", \"Pijamas\", \"Abajur\", \"Almofada\", \"Binóculo\", \"Cabide\", \"Dado\", \"Garfo\", \"Jaleco\", \"Lâmina\", \"Maçaneta\"];",
+									"",
+									"    var randomItem = pName[Math.floor(Math.random() * pName.length)];",
+									"",
+									"    return randomItem;",
+									"}",
+									"",
+									"pm.environment.set(\"ProductName\", pName());",
+									"",
+									"function price() {",
+									"    return Math.random() * 9999999999999999.99",
+									"}",
+									"",
+									"pm.environment.set(\"Price\", price());"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(",
+									"    \"Status code is 201\", ",
+									"    pm.response.to.have.status(201)",
+									");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"{{ProductName}}\",\n    \"price\": \"{{Price}}\",\n    \"status\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{productUrl}}",
+							"host": [
+								"{{productUrl}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ListProduct",
+			"item": [
+				{
+					"name": "Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(",
+									"    \"Status code is 200\", ",
+									"    pm.response.to.have.status(200)",
+									");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{productUrl}}",
+							"host": [
+								"{{productUrl}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UpdateProduct",
+			"item": [
+				{
+					"name": "Update Name",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function pName() {",
+									"",
+									"    var pName = [\"Maçã\", \"Abobrinha\", \"Pera\", \"Cogumelos\", \"Tamareira\", \"Espinafre\", \"Rabanete\", \"Carne de vitela\", \"Óleo\", \"Amêijoas\", \"Televisão\", \"Revistas\", \"Livros\", \"Rádio\", \"Jornal\", \"Faca\", \"Pijamas\", \"Abajur\", \"Almofada\", \"Binóculo\", \"Cabide\", \"Dado\", \"Garfo\", \"Jaleco\", \"Lâmina\", \"Maçaneta\"];",
+									"",
+									"    var randomItem = pName[Math.floor(Math.random() * pName.length)];",
+									"",
+									"    return randomItem;",
+									"}",
+									"",
+									"pm.environment.set(\"ProductName\", pName());"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(",
+									"    \"Status code is 204\", ",
+									"    pm.response.to.have.status(204)",
+									");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"name\": \"{{ProductName}}\",\n    \"price\": \"{{Price}}\",\n    \"status\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{productUrl}}/1",
+							"host": [
+								"{{productUrl}}"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Price",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function price() {",
+									"    return Math.random() * 9999999999999999.99",
+									"}",
+									"",
+									"pm.environment.set(\"Price\", price());"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(",
+									"    \"Status code is 204\", ",
+									"    pm.response.to.have.status(204)",
+									");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"name\": \"{{ProductName}}\",\n    \"price\": \"{{Price}}\",\n    \"status\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{productUrl}}/1",
+							"host": [
+								"{{productUrl}}"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Status",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(",
+									"    \"Status code is 204\", ",
+									"    pm.response.to.have.status(204)",
+									");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"name\": \"{{ProductName}}\",\n    \"price\": \"{{Price}}\",\n    \"status\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{productUrl}}/1",
+							"host": [
+								"{{productUrl}}"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "delete Product",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{productUrl}}/1",
+					"host": [
+						"{{productUrl}}"
+					],
+					"path": [
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -55,6 +55,7 @@ namespace Meus_Produtos.Controllers
 
             try
             {
+                client.Password = BCrypt.Net.BCrypt.HashPassword(client.Password);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)

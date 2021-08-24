@@ -1,0 +1,79 @@
+{
+	"id": "7a4d8877-225f-47dc-9bd7-a1ebf5e99b62",
+	"name": "MyProducts",
+	"values": [
+		{
+			"key": "url",
+			"value": "https://localhost:5001/api",
+			"enabled": true
+		},
+		{
+			"key": "clientUrl",
+			"value": "{{url}}/Clients",
+			"enabled": true
+		},
+		{
+			"key": "productUrl",
+			"value": "{{url}}/Products",
+			"enabled": true
+		},
+		{
+			"key": "Email",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "EmailProvider",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "GuidID",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "Name",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "Password",
+			"value": "CeYK#ckZ",
+			"enabled": true
+		},
+		{
+			"key": "WithoutNameMessage",
+			"value": "The Name field is required.",
+			"enabled": true
+		},
+		{
+			"key": "WithoutPasswordMessage",
+			"value": "The Password field is required.",
+			"enabled": true
+		},
+		{
+			"key": "WithoutEmailMessage",
+			"value": "The Email field is required.",
+			"enabled": true
+		},
+		{
+			"key": "WrongEmailMessage",
+			"value": "The Email field is not a valid e-mail address.",
+			"enabled": true
+		},
+		{
+			"key": "Price",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "ProductName",
+			"value": "",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2021-08-24T01:11:33.080Z",
+	"_postman_exported_using": "Postman/7.36.5"
+}
